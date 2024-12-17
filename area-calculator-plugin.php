@@ -1,9 +1,15 @@
 <?php
 /**
- * Plugin Name: Area Calculator Plugin
+ * Plugin Name: Area Calculator for WooCommerce
+ * Plugin URI: https://github.com/martatorredev/mtdev-area-calculator-for-woocommerce
  * Description: A plugin to calculate area based on user input for WooCommerce.
  * Version: 1.0
  * Author: Marta Torre
+ * Author URI: https://martatorre.dev
+ * License: GPL2
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: mtdev-area-calculator
+ * Domain Path: /languages
  */
 
 // Exit if accessed directly.
@@ -11,20 +17,18 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// Include the main class file.
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-area-calculator.php';
 
-// Initialize the plugin.
-function acp_init() {
+function mtdev_acp_init() {
     $area_calculator = new AreaCalculator();
-    $area_calculator->registerShortcode();
+    $area_calculator->renderShortcode();
 }
-add_action( 'init', 'acp_init' );
+add_action( 'init', 'mtdev_acp_init' );
 
-// Enqueue scripts and styles.
-function acp_enqueue_assets() {
-    wp_enqueue_style( 'acp-style', plugins_url( 'assets/css/style.css', __FILE__ ) );
-    wp_enqueue_script( 'acp-script', plugins_url( 'assets/js/script.js', __FILE__ ), array( 'jquery' ), null, true );
+function mtdev_acp_enqueue_assets() {
+    wp_enqueue_style( 'mtdev-acp-style', plugins_url( 'assets/css/style.css', __FILE__ ), array(), filemtime( plugin_dir_path( __FILE__ ) . 'assets/css/style.css' ) );
+    wp_enqueue_script( 'mtdev-acp-script', plugins_url( 'assets/js/script.js', __FILE__ ), array( 'jquery' ), filemtime( plugin_dir_path( __FILE__ ) . 'assets/js/script.js' ), true );
 }
-add_action( 'wp_enqueue_scripts', 'acp_enqueue_assets' );
+add_action( 'wp_enqueue_scripts', 'mtdev_acp_enqueue_assets' );
+
 ?>
